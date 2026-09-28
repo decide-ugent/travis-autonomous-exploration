@@ -1,0 +1,5 @@
+semantic_map:
+  confidence_threshold: 80       # % confidence to add object to map
+  persistence_file: "semantic_map.pkl"
+  duplicate_distance_threshold: 0.5   # meters — same label within this → duplicate
+  position_query_default_tolerance: 0.15  # meters — radius around closest node when no max_distance given

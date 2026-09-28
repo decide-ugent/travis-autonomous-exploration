@@ -1,0 +1,80 @@
+known_map:
+  run:
+    scene: lab_ghent
+    mode: known_map
+    simulator: ''
+    out_dir: /ros2_ws/src/navigation/exploration/tests/system/runs
+    record_bag: true
+    sample_rate_hz: 5.0
+    start_pose:
+    - 0.0
+    - 0.0
+    - 0.0
+  gates:
+    final_coverage_min: 0.9
+    must_terminate: true
+    time_to_complete_max_s: 1200
+    nav_aborted_max: 0
+  tolerances:
+    path_length_tolerance_pct: 25
+    waypoints_tolerance_pct: 25
+    coverage_tolerance_abs: 0.02
+  baseline:
+    source: manual_exploration
+    run_folder: runs/lab_ghent_known_map_baseline
+    final_coverage: 0.8451
+    covered_area_m2: 204.11
+    navigable_area_m2: 241.27
+    path_length_m: 91.69
+    coverage_rate: 0.00922
+    path_to_50pct_coverage_m: 39.96
+    path_to_90pct_coverage_m: null
+    time_to_50pct_coverage_s: 154.12
+    time_to_90pct_coverage_s: null
+    total_run_time_s: 521.0
+    idle_time_s: 308.61
+    n_planning_cycles: 0
+    planning_time_mean_s: null
+    planning_time_std_s: null
+    total_waypoints: null
+    waypoints_per_m2: null
+slam:
+  run:
+    scene: lab_ghent
+    mode: slam
+    simulator: ''
+    out_dir: /ros2_ws/src/navigation/exploration/tests/system/runs
+    record_bag: true
+    sample_rate_hz: 5.0
+    start_pose:
+    - 0.0
+    - 0.0
+    - 0.0
+  gates:
+    final_coverage_min: 0.9
+    must_terminate: true
+    time_to_complete_max_s: 1800
+    nav_aborted_max: 0
+  tolerances:
+    path_length_tolerance_pct: 25
+    waypoints_tolerance_pct: 25
+    coverage_tolerance_abs: 0.02
+  baseline:
+    source: manual_exploration
+    run_folder: runs/lab_ghent_slam_baseline
+    final_coverage: 0.8195
+    covered_area_m2: 217.0
+    navigable_area_m2: 248.37
+    path_length_m: 127.23
+    coverage_rate: 0.00644
+    path_to_50pct_coverage_m: 5.34
+    path_to_90pct_coverage_m: null
+    time_to_50pct_coverage_s: 27.15
+    time_to_90pct_coverage_s: null
+    total_run_time_s: 599.0
+    idle_time_s: 252.8
+    n_planning_cycles: 0
+    planning_time_mean_s: null
+    planning_time_std_s: null
+    total_waypoints: null
+    waypoints_per_m2: null

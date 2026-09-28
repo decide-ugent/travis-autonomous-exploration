@@ -1,0 +1,60 @@
+# Gazebo Harmonic simulation container for TRAVIS (AWS warehouse / house / hospital worlds).
+# Run together with the main compose file, from the TRAVIS folder:
+#   docker compose -f docker-compose.yml -f docker-compose-AWS.sim.yml up          # warehouse (default)
+#   WORLD=house docker compose -f docker-compose.yml -f docker-compose-AWS.sim.yml up
+#   WORLD=hospital docker compose -f docker-compose.yml -f docker-compose-AWS.sim.yml up
+#   HEADLESS=False WORLD=house ... up                                              # with gz GUI (xhost +local:docker first)
+# See README_AWS_sim.md. This file does not modify the existing jazzy service.
+services:
+  sim:
+    build:
+      context: ..                       # ros_ws/src (needs both *-jazzy world packages)
+      dockerfile: travis/Dockerfile_AWS.sim
+    container_name: TRAVIS_sim
+    network_mode: host                  # same DDS network as TRAVIS_ros2jazzy
+    ipc: host
+    tty: true
+    environment:
+      - DISPLAY=${DISPLAY}
+      - XAUTHORITY=/home/ubuntu/.Xauthority
+      - LIBGL_ALWAYS_SOFTWARE=1
+      - MESA_GL_VERSION_OVERRIDE=3.3
+      - ROS_DOMAIN_ID=0                 # matches TRAVIS_ros2jazzy
+      - FASTRTPS_DEFAULT_PROFILES_FILE=/fastdds_profile.xml
+      - TURTLEBOT3_MODEL=waffle
+      - WORLD=${WORLD:-warehouse}       # warehouse | house | hospital
+      - HEADLESS=${HEADLESS:-True}
+    volumes:
+      - ./fastdds_profile.xml:/fastdds_profile.xml
+      # live-editable subtrees over the image copies (world/model/launch/param edits
+      # only need a container restart thanks to --symlink-install)
+      - ../aws-robomaker-small-warehouse-world-jazzy/worlds:/sim_ws/src/aws_robomaker_small_warehouse_world_jazzy/worlds
+      - ../aws-robomaker-small-warehouse-world-jazzy/models:/sim_ws/src/aws_robomaker_small_warehouse_world_jazzy/models
+      - ../aws-robomaker-small-warehouse-world-jazzy/launch:/sim_ws/src/aws_robomaker_small_warehouse_world_jazzy/launch
+      - ../aws-robomaker-small-warehouse-world-jazzy/params:/sim_ws/src/aws_robomaker_small_warehouse_world_jazzy/params
+      - ../aws-robomaker-small-house-world-jazzy/worlds:/sim_ws/src/aws_robomaker_small_house_world_jazzy/worlds
+      - ../aws-robomaker-small-house-world-jazzy/models:/sim_ws/src/aws_robomaker_small_house_world_jazzy/models
+      - ../aws-robomaker-small-house-world-jazzy/launch:/sim_ws/src/aws_robomaker_small_house_world_jazzy/launch
+      - ../aws-robomaker-small-house-world-jazzy/params:/sim_ws/src/aws_robomaker_small_house_world_jazzy/params
+      - ../aws-robomaker-hospital-world-jazzy/worlds:/sim_ws/src/aws_robomaker_hospital_world_jazzy/worlds
+      - ../aws-robomaker-hospital-world-jazzy/models:/sim_ws/src/aws_robomaker_hospital_world_jazzy/models
+      - ../aws-robomaker-hospital-world-jazzy/launch:/sim_ws/src/aws_robomaker_hospital_world_jazzy/launch
+      - ../aws-robomaker-hospital-world-jazzy/params:/sim_ws/src/aws_robomaker_hospital_world_jazzy/params
+      - ${HOME}/.Xauthority:/home/ubuntu/.Xauthority:rw
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    user: "${UID}:${GID}"
+    command:
+      - bash
+      - -c
+      - |
+        set -e
+        source /opt/ros/jazzy/setup.bash
+        cd /sim_ws
+        colcon build --symlink-install --packages-select aws_robomaker_small_warehouse_world_jazzy aws_robomaker_small_house_world_jazzy aws_robomaker_hospital_world_jazzy
+        source /sim_ws/install/setup.bash
+        case "$${WORLD}" in
+          house)    PKG=aws_robomaker_small_house_world_jazzy ;;
+          hospital) PKG=aws_robomaker_hospital_world_jazzy ;;
+          *)        PKG=aws_robomaker_small_warehouse_world_jazzy ;;
+        esac
+        exec ros2 launch $${PKG} travis_spawn_turtlebot3_launch.py headless:=$${HEADLESS}

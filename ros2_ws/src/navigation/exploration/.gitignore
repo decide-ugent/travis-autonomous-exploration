@@ -1,0 +1,6 @@
+
+__pycache__
+__pycache__/*
+tests/visual_demo_coverage
+tests/visual_demo_semantic
+tests/visual_demo_slam

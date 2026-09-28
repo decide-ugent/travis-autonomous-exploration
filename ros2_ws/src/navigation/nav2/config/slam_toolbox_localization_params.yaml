@@ -1,0 +1,82 @@
+# slam_toolbox in LOCALIZATION mode: the alternative to AMCL for known-map runs.
+#
+# Why this exists: AMCL matches the live scan against a rasterized occupancy grid with a particle filter. slam_toolbox localization instead scan-matches against the STORED SCANS in a serialized pose-graph, which is generally tighter, and it publishes map -> odom exactly as AMCL does, so nav2 and the exploration node need no change at all.
+#
+# Selected with `ros2 launch nav2 nav2.launch.py localization:=slam_toolbox serialized_map:=<stem>`. The default stays amcl, so no existing invocation changes behaviour.
+#
+# This file is a sibling of slam_toolbox_params.yaml (the mapping config) rather than an edit of it: mapping and localization runs must be able to differ without one silently changing the other.
+#
+# map_file_name is deliberately EMPTY here and is injected by nav2.launch.py from the serialized_map argument, so one config serves every map.
+slam_toolbox:
+  ros__parameters:
+    use_sim_time: true
+    solver_plugin: solver_plugins::CeresSolver
+    ceres_linear_solver: SPARSE_NORMAL_CHOLESKY
+    ceres_preconditioner: SCHUR_JACOBI
+    ceres_trust_strategy: LEVENBERG_MARQUARDT
+    ceres_dogleg_type: TRADITIONAL_DOGLEG
+    ceres_loss_function: None
+
+    odom_frame: odom
+    map_frame: map
+    # base_frame and scan_topic are overridden by nav2.launch.py, because they genuinely differ per robot: the sim uses base_footprint and /panoramic/scan while the ROSbot XL uses base_link and /scan. A wrong value here means map -> base_frame never resolves and the whole stack stalls silently, so neither is baked in.
+    base_frame: base_footprint
+    scan_topic: /panoramic/scan
+
+    mode: localization
+
+    # Path to the serialized pose-graph WITHOUT its extension (slam_toolbox appends .posegraph and .data). Injected by the launch file from serialized_map:=.
+    map_file_name: ""
+    # Start from the pose stored in the graph instead of blocking until someone publishes /initialpose. Exploration begins planning as soon as the node is up, so waiting for a manual pose estimate would stall the run.
+    map_start_at_dock: true
+
+    # Never write during a localization run. The stored map is an input here, and a localization session must not be able to overwrite the map it was given.
+    use_map_saver: false
+    # Do not add new nodes or close loops into the reference graph. A bad match during localization would otherwise corrupt the stored map for every future run.
+    do_loop_closing: false
+
+    debug_logging: false
+    throttle_scans: 1
+    transform_publish_period: 0.02
+    map_update_interval: 1.5
+    resolution: 0.05
+    max_laser_range: 20.0
+    minimum_time_interval: 0.2
+    transform_timeout: 0.2
+    tf_buffer_duration: 30.0
+    stack_size_to_use: 40000000
+
+    # Scan matching. These carry over from the mapping config unchanged so localization matches scans the same way the map was built; a mismatch here degrades the very thing this mode exists for.
+    use_scan_matching: true
+    use_scan_barycenter: true
+    minimum_travel_distance: 0.2
+    minimum_travel_heading: 0.2
+    scan_buffer_size: 10
+    scan_buffer_maximum_scan_distance: 10.0
+    link_match_minimum_response_fine: 0.1
+    link_scan_maximum_distance: 1.5
+    loop_search_maximum_distance: 3.0
+    loop_match_minimum_chain_size: 10
+    loop_match_maximum_variance_coarse: 3.0
+    loop_match_minimum_response_coarse: 0.35
+    loop_match_minimum_response_fine: 0.45
+
+    # Correlation
+    correlation_search_space_dimension: 0.5
+    correlation_search_space_resolution: 0.01
+    correlation_search_space_smear_deviation: 0.1
+
+    # Loop closure
+    loop_search_space_dimension: 8.0
+    loop_search_space_resolution: 0.05
+    loop_search_space_smear_deviation: 0.03
+
+    # Scan matcher
+    distance_variance_penalty: 0.5
+    angle_variance_penalty: 1.0
+    fine_search_angle_offset: 0.00349
+    coarse_search_angle_offset: 0.349
+    coarse_angle_resolution: 0.0349
+    minimum_angle_penalty: 0.9
+    minimum_distance_penalty: 0.5
+    use_response_expansion: true

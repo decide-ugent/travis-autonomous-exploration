@@ -1,0 +1,58 @@
+exploration_node:
+  ros__parameters:
+    exploration.strategy: "costmap"                       # "costmap", "frontier", "grid"
+    exploration.observation_rotation_increment: 30.0      # degrees per rotation step
+
+    # Coverage thresholds
+    exploration.exploration_completion_threshold: 0.90    # stop when this fraction of achievable free
+                                                          # space is visually covered AND no frontiers remain.
+                                                          # For unknown maps: only checked once no frontiers
+                                                          # are left (robot will not stop early mid-discovery).
+                                                          # Set to 0.0 to stop as soon as frontiers are exhausted.
+    exploration.planner_coverage_warning_threshold: 0.90  # warn if map geometry limits achievable coverage
+                                                          # to below this fraction (isolated regions, etc.)
+
+    # Planner parameters
+    exploration.sampling_step_m: 4.5                      # candidate grid spacing in metres (resolution-independent)
+                                                          # rule of thumb: <= max_detection_range / 2 to guarantee overlap
+                                                          # 3.0 m suits most indoor labs; increase for large open spaces
+    exploration.frontier_weight: 1.0                      # alpha - weight for map discovery gain (SLAM mode)
+    exploration.coverage_weight: 1.0                      # beta  - weight for visual coverage gain
+    exploration.travel_cost_weight: 1.0                   # gamma - travel-cost penalty in utility-density scoring
+                                                          # score = gain x exp(-gamma x bfs_dist / max_range_px)
+                                                          # 1.0 -> at max_detection_range distance, candidate score x0.37 (e^-1).
+                                                          # higher gamma -> sharper far-penalty; 0.0 -> pure gain scoring (ignores distance).
+    exploration.max_waypoints_per_plan: -1                # maximum waypoints returned per plan cycle.
+                                                          # -1 = auto-derive: ceil(candidates/(max_range_m/sampling_step_m)^2), min 5.
+                                                          # Set to a positive integer to hard-cap (e.g. 10 limits plans to 10 waypoints).
+
+    exploration.replan_every_n_step: 2                    # under live SLAM, replan after every N arrived waypoints instead of
+                                                          # draining the whole (increasingly stale) plan. <=0 = drain whole plan.
+                                                          # Only applied when exploring a live /map; a given static map always drains.
+
+    exploration.mid_path_replan_ratio: 0.75              # mid-travel, abort the current path and replan if another waypoint's navigable distance drops below this fraction of the distance to the current target. Lower = reluctant to divert; higher = eager. 0.0 disables diversion. (0.75 chosen via tests/algo_evaluation/test_midpath_replan_ratio.py: shorter path than the old 0.5 on all 3 maps.)
+
+    exploration.plan_timeout_s: 300.0                     # how long (seconds) exploration keeps trying before it gives up and stops. Guards BOTH ways progress can halt: (a) the planner returns NO waypoints (candidate pool starved) - after the first 5s the waypoints parked as "unreachable" are restored and planning retries with a full pool; (b) a plan exists but EVERY waypoint is inaccessible (typically the robot sits in the inflation band, where nav2 cannot plan from the start pose and rejects each goal in ~30ms - without this time gate the 5-failed-plans cap fired in a couple of SECONDS). Either way a warning is logged periodically so the situation is visible and the robot can be moved to clear space. Raise it (e.g. 1800) to give an operator more time; 0 = never give up.
+    exploration.min_frontier_cells: 20                   # SLAM stop tolerance: treat "no frontiers" as total distinct visible frontier cells <= this (0 = strict/exact, must be none). Absorbs phantom/unreachable frontier slivers so the robot stops at high coverage instead of chasing the last wisp. (~20 px ≈ 0.05 m² at 0.05 m/px.)
+    exploration.no_progress_streak: 3                     # SLAM only: also stop after this many consecutive arrived waypoints each adding < no_progress_eps new coverage (0 = disabled). Catches persistent UNREACHABLE frontiers the tolerance alone won't.
+    exploration.no_progress_eps: 0.005                    # minimum coverage-fraction gain per arrival to count as progress (0.5%).
+
+    exploration.abort_blacklist_after: 3                  # blacklist a waypoint after this many consecutive Nav2 ABORTs, so a persistently unreachable frontier (inside a wall/inflation) stops being re-planned as waypoint 0 forever. <=1 blacklists on the first abort. Only aborts the arrival failsafe could NOT rescue are counted (see arrival_verify_timeout_s below).
+
+    # Arrival failsafe: nav2 reporting failure does not prove the waypoint was not reached. The robot may have stopped just outside nav2's own goal checker, or a human may drive it the last stretch (the teleop rescue described in README.md). Instead of blacklisting on nav2's word, the node holds in the VERIFYING state and decides from the TF pose (map -> base_frame, the same frame the goal is in; odometry is deliberately NOT used because it drifts under SLAM and lives in another frame).
+    exploration.arrival_tolerance_m: 0.4                  # accept the waypoint as reached when the robot is within this distance (m) of the goal, regardless of orientation (yaw is fully tolerated, any facing counts). 2x nav2's xy_goal_tolerance of 0.2 in the live params files, loose enough to credit an arrival nav2's own checker just missed.
+    exploration.arrival_verify_timeout_s: 30.0            # seconds the robot must remain STILL before the waypoint is finally declared failed. This is a stillness timeout, NOT a wall-clock cap: any motion beyond arrival_motion_eps_m restarts it, so a human actively driving the robot keeps the window open for as long as they need. Worst case cost is this many seconds per nav2 failure, only when the robot is stationary and not at the goal. 0 disables the failsafe entirely and restores the immediate-abort behaviour.
+    exploration.arrival_motion_eps_m: 0.05               # pose change (m) between 1 Hz ticks that counts as real motion rather than TF/SLAM jitter. Too low and estimator noise alone holds the window open forever on a parked robot; too high and slow manual driving is mistaken for standing still.
+
+    exploration.see_while_moving: true                    # observe the camera FOV continuously along the path AND aim the Nav2 goal yaw at the most-uncovered area, instead of driving heading-blind then spinning in place at each goal. false = legacy turn-at-goal (Spin sequence). (Chosen via tests/algo_evaluation/test_see_while_moving.py: 'see_while_moving_oriented' reaches similar/higher coverage than turn-at-goal without the spin, especially under SLAM. Needs nav2 yaw_goal_tolerance ~0.35rad so Nav2 actually ends facing the requested heading.)
+    exploration.observe_step_m: 0.5                       # distance (m) the robot travels between successive along-path FOV marks when see_while_moving is on.
+
+    # Map source (used by ROS2 node)
+    exploration.map_file_path: ""                         # absolute path to PGM; leave empty to use live /map topic
+    exploration.map_yaml_path: ""                         # matching YAML file path
+    nav2.spin_time_allowance: 10.0                        # seconds
+
+    # Nav2 silent-death watchdog: rclpy never fails a pending result future when its action server disappears, so if nav2 dies or is restarted mid-goal the node would otherwise wait in TRAVELING forever with no ABORTED and no result. The watchdog bounds that wait, hands the waypoint to the arrival failsafe above, and lets the next goal send re-link to the restarted server.
+    # The same switch and timeout also govern TF-listener recovery. When the other container restarts, its /tf_static publishers are replaced, and a latched static sample is delivered only once on subscription match, so a listener that was already matched never receives the replacement and map -> base_link stops resolving permanently (a freshly started tf2_echo still works, which is how this was diagnosed). Static transforms are never republished, so it cannot self-heal; the node rebuilds its TransformListener instead. See _check_tf_alive.
+    nav2.watchdog_enabled: true                          # master switch for the watchdog, covering BOTH the nav2 action client and the TF listener. false restores the previous behaviour, where a silent nav2 death or a broken TF tree hangs exploration until the run is killed by hand.
+    nav2.watchdog_stall_timeout_s: 30.0                  # seconds without NavigateToPose feedback before a nav2 that is still advertising its action server is presumed wedged. Fires long before nav2's own action_server_result_timeout of 900.0, so the node reacts in seconds rather than a quarter hour. 0 disables this half only; a server that disappears from the graph is still detected immediately. Doubles as the TF threshold: how long map -> base_frame must stay unresolvable before the TF listener is rebuilt, well above the transient TF gaps this node already tolerates by returning no pose and retrying.

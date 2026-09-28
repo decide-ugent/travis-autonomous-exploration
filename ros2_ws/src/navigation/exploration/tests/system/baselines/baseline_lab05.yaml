@@ -1,0 +1,77 @@
+known_map:
+  run:
+    scene: lab05
+    mode: known_map
+    simulator: gazebo
+    out_dir: /ros2_ws/src/navigation/exploration/tests/system/runs
+    record_bag: true
+    sample_rate_hz: 5.0
+    start_pose:
+    - 0.0
+    - 0.0
+    - 0.0
+  gates:
+    final_coverage_min: 0.9
+    must_terminate: true
+    time_to_complete_max_s: 1200
+    nav_aborted_max: 0
+  tolerances:
+    path_length_tolerance_pct: 25
+    waypoints_tolerance_pct: 25
+    coverage_tolerance_abs: 0.02
+  baseline:
+    source: ''
+    run_folder: ''
+    final_coverage: null
+    covered_area_m2: null
+    navigable_area_m2: null
+    path_length_m: null
+    coverage_rate: null
+    path_to_50pct_coverage_m: null
+    path_to_90pct_coverage_m: null
+    time_to_50pct_coverage_s: null
+    time_to_90pct_coverage_s: null
+    total_run_time_s: null
+    idle_time_s: null
+    total_waypoints: null
+    waypoints_per_m2: null
+slam:
+  run:
+    scene: lab05
+    mode: slam
+    simulator: gazebo
+    out_dir: /ros2_ws/src/navigation/exploration/tests/system/runs
+    record_bag: true
+    sample_rate_hz: 5.0
+    start_pose:
+    - 0.0
+    - 0.0
+    - 0.0
+  gates:
+    final_coverage_min: 0.9
+    must_terminate: true
+    time_to_complete_max_s: 1800
+    nav_aborted_max: 0
+  tolerances:
+    path_length_tolerance_pct: 25
+    waypoints_tolerance_pct: 25
+    coverage_tolerance_abs: 0.02
+  baseline:
+    source: strategy
+    run_folder: runs/lab05_slam_baseline_1
+    final_coverage: 0.9445
+    covered_area_m2: 145.4
+    navigable_area_m2: 152.56
+    path_length_m: 61.03
+    coverage_rate: 0.01548
+    path_to_50pct_coverage_m: 1.5
+    path_to_90pct_coverage_m: 52.97
+    time_to_50pct_coverage_s: 19.2
+    time_to_90pct_coverage_s: 590.2
+    total_run_time_s: 663.2
+    idle_time_s: 329.2
+    n_planning_cycles: 0
+    planning_time_mean_s: null
+    planning_time_std_s: null
+    total_waypoints: null
+    waypoints_per_m2: null

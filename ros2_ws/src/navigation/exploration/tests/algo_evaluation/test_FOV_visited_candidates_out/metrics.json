@@ -1,0 +1,42 @@
+[
+  {
+    "map": "lab_ghent",
+    "arm": "baseline",
+    "completed": true,
+    "final_coverage": 0.8225,
+    "reached_threshold": false,
+    "path_length_m": 270.24,
+    "coverage_per_m": 0.00304,
+    "coverage_auc": 0.6342,
+    "n_plans": 18,
+    "n_visited": 64,
+    "premature_stops": 0,
+    "pool_exhausted_events": 0,
+    "coverage_holes_cells": 21653,
+    "coverage_holes_frac": 0.1775,
+    "redundant_coverage_frac": 0.9557,
+    "path_efficiency_vs_nn": 2.072,
+    "total_plan_time_s": 26.037,
+    "mean_plan_time_ms": 1446.51
+  },
+  {
+    "map": "lab_ghent",
+    "arm": "chosen",
+    "completed": true,
+    "final_coverage": 0.8215,
+    "reached_threshold": false,
+    "path_length_m": 232.49,
+    "coverage_per_m": 0.00353,
+    "coverage_auc": 0.5882,
+    "n_plans": 15,
+    "n_visited": 56,
+    "premature_stops": 0,
+    "pool_exhausted_events": 0,
+    "coverage_holes_cells": 21770,
+    "coverage_holes_frac": 0.1785,
+    "redundant_coverage_frac": 0.9481,
+    "path_efficiency_vs_nn": 2.085,
+    "total_plan_time_s": 17.704,
+    "mean_plan_time_ms": 1180.25
+  }
+]

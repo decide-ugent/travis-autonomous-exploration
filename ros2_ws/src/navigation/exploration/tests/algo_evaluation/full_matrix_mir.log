@@ -1,0 +1,149 @@
+robot=mir  inflation_radius=0.6 m
+
+=== lab_ghent / known_map ===
+metric                          turn_at_goal  see_while_movingsee_while_moving_oriented              both
+---------------------------------------------------------------------------------------------------------
+est_exploration_time_s             1471.0000  1049.3000(-29%+)   958.3000(-35%+)  1179.8000(-20%+)
+final_coverage                        0.7885      0.7932(+1%+)      0.8154(+3%+)      0.8209(+4%+)
+coverage_holes_frac                   0.2115      0.2068(-2%+)     0.1846(-13%+)     0.1791(-15%+)
+path_length_m                       150.5000    151.9300(+1%-)   130.2500(-13%+)   130.2500(-13%+)
+total_angular_travel_deg          29955.0000 20925.0000(-30%+) 20580.0000(-31%+) 24540.0000(-18%+)
+total_spins                              151         0(-100%+)         0(-100%+)         89(-41%+)
+zero_gain_spins                            6         0(-100%+)         0(-100%+)          1(-83%+)
+coverage_auc                          0.5677     0.4923(-13%-)      0.5531(-3%-)      0.5665(-0%-)
+path_to_90pct_m                         None              None              None              None
+redundant_coverage_frac               0.9442      0.9613(+2%-)      0.9615(+2%-)      0.9653(+2%-)
+total_plan_time_s                     5.4310     8.0010(+47%-)      4.9870(-8%+)      4.9490(-9%+)
+mark_time_s                           0.1450     0.2730(+88%-)     0.2530(+74%-)    0.3150(+117%-)
+n_waypoints                               26                26                23                23
+  visuals -> /home/idlab332/workspace/ros_ws/src/TRAVIS/ros2_ws/src/navigation/exploration/tests/algo_evaluation/test_see_while_moving_out
+
+=== lab_05 / known_map ===
+metric                          turn_at_goal  see_while_movingsee_while_moving_oriented              both
+---------------------------------------------------------------------------------------------------------
+est_exploration_time_s              612.9000   481.3000(-21%+)   480.5000(-22%+)   527.5000(-14%+)
+final_coverage                        0.9560      0.9512(-1%-)      0.9659(+1%+)      0.9706(+2%+)
+coverage_holes_frac                   0.0440     0.0488(+11%-)     0.0341(-22%+)     0.0294(-33%+)
+path_length_m                        53.0600    71.3300(+34%-)    65.3000(+23%-)    46.3700(-13%+)
+total_angular_travel_deg          11580.0000  9315.0000(-20%+) 10320.0000(-11%+) 10110.0000(-13%+)
+total_spins                              101         0(-100%+)         0(-100%+)         83(-18%+)
+zero_gain_spins                            3         0(-100%+)         0(-100%+)          5(+67%-)
+coverage_auc                          0.6277     0.7281(+16%+)     0.7516(+20%+)     0.7451(+19%+)
+path_to_90pct_m                      39.3700     39.3400(-0%+)     39.3000(-0%+)     37.1400(-6%+)
+redundant_coverage_frac               0.9677      0.9642(-0%+)      0.9618(-1%+)      0.9819(+1%-)
+total_plan_time_s                     2.1100     1.8760(-11%+)      2.1660(+3%-)     1.8720(-11%+)
+mark_time_s                           0.0760     0.0920(+21%-)     0.0970(+28%-)     0.1170(+54%-)
+n_waypoints                               17                17                18                17
+  visuals -> /home/idlab332/workspace/ros_ws/src/TRAVIS/ros2_ws/src/navigation/exploration/tests/algo_evaluation/test_see_while_moving_out
+
+=== warehouse_amazon / known_map ===
+metric                          turn_at_goal  see_while_movingsee_while_moving_oriented              both
+---------------------------------------------------------------------------------------------------------
+est_exploration_time_s             1084.6000   730.1000(-33%+)   689.5000(-36%+)   916.0000(-16%+)
+final_coverage                        0.7468      0.7509(+1%+)      0.7547(+1%+)      0.7591(+2%+)
+coverage_holes_frac                   0.2532      0.2491(-2%+)      0.2453(-3%+)      0.2409(-5%+)
+path_length_m                       113.9500    119.8800(+5%-)    110.6300(-3%+)    110.6300(-3%+)
+total_angular_travel_deg          19770.0000 12105.0000(-39%+) 11880.0000(-40%+) 15930.0000(-19%+)
+total_spins                              138         0(-100%+)         0(-100%+)         91(-34%+)
+zero_gain_spins                            3         0(-100%+)         0(-100%+)         0(-100%+)
+coverage_auc                          0.5503      0.5551(+1%+)      0.5645(+3%+)      0.5831(+6%+)
+path_to_90pct_m                         None              None              None              None
+redundant_coverage_frac               0.9688      0.9766(+1%-)      0.9828(+1%-)      0.9861(+2%-)
+total_plan_time_s                     5.5260      5.3010(-4%+)     6.3530(+15%-)     6.3690(+15%-)
+mark_time_s                           0.1090     0.1770(+62%-)     0.1770(+62%-)    0.2370(+117%-)
+n_waypoints                               26                26                25                25
+  visuals -> /home/idlab332/workspace/ros_ws/src/TRAVIS/ros2_ws/src/navigation/exploration/tests/algo_evaluation/test_see_while_moving_out
+
+=== house_amazon / known_map ===
+metric                          turn_at_goal  see_while_movingsee_while_moving_oriented              both
+---------------------------------------------------------------------------------------------------------
+est_exploration_time_s              570.4000   355.7000(-38%+)   368.0000(-35%+)   454.7000(-20%+)
+final_coverage                        0.9553      0.9504(-1%-)      0.9650(+1%+)      0.9633(+1%+)
+coverage_holes_frac                   0.0447     0.0496(+11%-)     0.0350(-22%+)     0.0367(-18%+)
+path_length_m                        62.0700     62.0700(+0%.)     62.0700(+0%.)    51.8800(-16%+)
+total_angular_travel_deg           8850.0000  5265.0000(-41%+)  5820.0000(-34%+)   8040.0000(-9%+)
+total_spins                               90         0(-100%+)         0(-100%+)         51(-43%+)
+zero_gain_spins                            3         0(-100%+)         0(-100%+)         0(-100%+)
+coverage_auc                          0.7228      0.6567(-9%-)      0.7115(-2%-)      0.7561(+5%+)
+path_to_90pct_m                      58.8000     56.1700(-4%+)    49.9400(-15%+)    39.7600(-32%+)
+redundant_coverage_frac               0.9667      0.9484(-2%+)      0.9590(-1%+)      0.9737(+1%-)
+total_plan_time_s                     1.6530      1.5440(-7%+)      1.5040(-9%+)     1.2890(-22%+)
+mark_time_s                           0.0640     0.0830(+30%-)     0.0920(+44%-)     0.1040(+62%-)
+n_waypoints                               14                14                14                12
+  visuals -> /home/idlab332/workspace/ros_ws/src/TRAVIS/ros2_ws/src/navigation/exploration/tests/algo_evaluation/test_see_while_moving_out
+
+metrics -> /home/idlab332/workspace/ros_ws/src/TRAVIS/ros2_ws/src/navigation/exploration/tests/algo_evaluation/test_see_while_moving_out/metrics_mir_known_map.json / .csv
+
+=== lab_ghent / slam ===
+metric                          turn_at_goal  see_while_movingsee_while_moving_oriented              both
+---------------------------------------------------------------------------------------------------------
+est_exploration_time_s              583.1000 1347.7000(+131%-) 1436.2000(+146%-)  1160.0000(+99%-)
+final_coverage                        0.4682     0.7846(+68%+)     0.8078(+73%+)     0.7401(+58%+)
+coverage_holes_frac                   0.5318     0.2154(-59%+)     0.1922(-64%+)     0.2599(-51%+)
+path_length_m                        56.4800  194.1300(+244%-)  199.9000(+254%-)  140.5400(+149%-)
+total_angular_travel_deg          11670.000027045.0000(+132%-)30030.0000(+157%-) 22680.0000(+94%-)
+total_spins                               71         0(-100%+)         0(-100%+)          77(+8%-)
+zero_gain_spins                            4         0(-100%+)         0(-100%+)          2(-50%+)
+coverage_auc                          0.3096     0.5704(+84%+)     0.5998(+94%+)     0.5518(+78%+)
+path_to_90pct_m                         None              None              None              None
+redundant_coverage_frac               0.9516      0.9647(+1%-)      0.9523(+0%-)      0.9434(-1%+)
+total_plan_time_s                     1.0920    3.9050(+258%-)    3.8810(+255%-)    2.5690(+135%-)
+mark_time_s                           0.0740    0.3770(+409%-)    0.4140(+459%-)    0.3580(+384%-)
+n_waypoints                               11                35                34                19
+  visuals -> /home/idlab332/workspace/ros_ws/src/TRAVIS/ros2_ws/src/navigation/exploration/tests/algo_evaluation/test_see_while_moving_out
+
+=== lab_05 / slam ===
+metric                          turn_at_goal  see_while_movingsee_while_moving_oriented              both
+---------------------------------------------------------------------------------------------------------
+est_exploration_time_s              732.8000   656.6000(-10%+)    699.5000(-5%+)   588.8000(-20%+)
+final_coverage                        0.9374      0.9644(+3%+)      0.9769(+4%+)      0.9581(+2%+)
+coverage_holes_frac                   0.0626     0.0356(-43%+)     0.0231(-63%+)     0.0419(-33%+)
+path_length_m                        68.6200    97.6500(+42%-)    97.9800(+43%-)    56.9700(-17%+)
+total_angular_travel_deg          14820.0000 12645.0000(-15%+)  14520.0000(-2%+) 12180.0000(-18%+)
+total_spins                               93         0(-100%+)         0(-100%+)         66(-29%+)
+zero_gain_spins                            3         0(-100%+)         0(-100%+)           3(+0%.)
+coverage_auc                          0.6743      0.6882(+2%+)     0.8145(+21%+)     0.7736(+15%+)
+path_to_90pct_m                      56.2400    69.5300(+24%-)    46.2500(-18%+)    37.4800(-33%+)
+redundant_coverage_frac               0.9611      0.9762(+2%-)      0.9776(+2%-)      0.9683(+1%-)
+total_plan_time_s                     1.1960     1.9340(+62%-)     1.8110(+51%-)     1.0320(-14%+)
+mark_time_s                           0.0730     0.1340(+84%-)    0.1500(+105%-)     0.1300(+78%-)
+n_waypoints                               18                21                20                13
+  visuals -> /home/idlab332/workspace/ros_ws/src/TRAVIS/ros2_ws/src/navigation/exploration/tests/algo_evaluation/test_see_while_moving_out
+
+=== warehouse_amazon / slam ===
+metric                          turn_at_goal  see_while_movingsee_while_moving_oriented              both
+---------------------------------------------------------------------------------------------------------
+est_exploration_time_s              798.9000   931.6000(+17%-)    765.0000(-4%+)   957.5000(+20%-)
+final_coverage                        0.6223     0.7560(+21%+)     0.7498(+20%+)     0.7546(+21%+)
+coverage_holes_frac                   0.3777     0.2440(-35%+)     0.2502(-34%+)     0.2454(-35%+)
+path_length_m                       100.8100   162.4100(+61%-)   137.9800(+37%-)   129.0400(+28%-)
+total_angular_travel_deg          13170.0000  13815.0000(+5%-) 10545.0000(-20%+) 14880.0000(+13%-)
+total_spins                               79         0(-100%+)         0(-100%+)         87(+10%-)
+zero_gain_spins                            2         0(-100%+)         0(-100%+)         4(+100%-)
+coverage_auc                          0.4757     0.5860(+23%+)     0.5824(+22%+)     0.5898(+24%+)
+path_to_90pct_m                         None              None              None              None
+redundant_coverage_frac               0.9256      0.9827(+6%-)      0.9687(+5%-)      0.9660(+4%-)
+total_plan_time_s                     1.9160    4.9000(+156%-)     3.7110(+94%-)     3.4250(+79%-)
+mark_time_s                           0.0660    0.2630(+298%-)    0.2390(+262%-)    0.2780(+321%-)
+n_waypoints                               14                26                22                21
+  visuals -> /home/idlab332/workspace/ros_ws/src/TRAVIS/ros2_ws/src/navigation/exploration/tests/algo_evaluation/test_see_while_moving_out
+
+=== house_amazon / slam ===
+metric                          turn_at_goal  see_while_movingsee_while_moving_oriented              both
+---------------------------------------------------------------------------------------------------------
+est_exploration_time_s              352.0000   458.0000(+30%-)    335.6000(-5%+)   438.8000(+25%-)
+final_coverage                        0.8455     0.9530(+13%+)     0.9533(+13%+)     0.9645(+14%+)
+coverage_holes_frac                   0.1545     0.0470(-70%+)     0.0467(-70%+)     0.0355(-77%+)
+path_length_m                        36.3300   80.3300(+121%-)    53.4600(+47%-)    46.1800(+27%-)
+total_angular_travel_deg           6180.0000   6705.0000(+8%-)   5850.0000(-5%+)  8040.0000(+30%-)
+total_spins                               50         0(-100%+)         0(-100%+)         55(+10%-)
+zero_gain_spins                            0                 0                 0                 2
+coverage_auc                          0.6629     0.7968(+20%+)     0.7435(+12%+)     0.7629(+15%+)
+path_to_90pct_m                         None           45.0800           41.3000           39.0800
+redundant_coverage_frac               0.9365      0.9702(+4%-)      0.9534(+2%-)      0.9810(+5%-)
+total_plan_time_s                     0.7300     1.2120(+66%-)     0.9960(+36%-)      0.7580(+4%-)
+mark_time_s                           0.0380    0.1130(+197%-)    0.0870(+129%-)    0.1110(+192%-)
+n_waypoints                                8                17                13                13
+  visuals -> /home/idlab332/workspace/ros_ws/src/TRAVIS/ros2_ws/src/navigation/exploration/tests/algo_evaluation/test_see_while_moving_out
+
+metrics -> /home/idlab332/workspace/ros_ws/src/TRAVIS/ros2_ws/src/navigation/exploration/tests/algo_evaluation/test_see_while_moving_out/metrics_mir_slam.json / .csv

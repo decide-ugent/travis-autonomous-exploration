@@ -1,0 +1,14 @@
+[
+  {
+    "map": "lab_ghent",
+    "variant": "production_today",
+    "total_angular_travel_deg": 9030.0,
+    "total_spins": 175,
+    "zero_gain_spins": 4,
+    "near_redundant_spins": 110,
+    "final_coverage": 0.8811,
+    "waypoints_visited": 27,
+    "est_rotation_time_s": 463.2,
+    "cells_per_deg": 10.87
+  }
+]

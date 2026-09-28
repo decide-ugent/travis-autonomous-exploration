@@ -1,0 +1,40 @@
+# GPU override for the Gazebo Harmonic sim container (TRAVIS_sim).
+#
+# The gz-sim `gpu_lidar` and camera render through ogre2. Under software
+# rendering (LIBGL_ALWAYS_SOFTWARE=1, llvmpipe) the lidar depth render is
+# incomplete — most rays come back `inf`, so walls are not detected. On a
+# machine with an NVIDIA GPU + nvidia-container-toolkit, this override gives the
+# sim real GPU rendering so the lidar returns proper ranges.
+#
+# Layer it ON TOP of the sim compose (order matters — GPU file last):
+#   docker compose -f docker-compose.yml \
+#                  -f docker-compose-AWS.sim.yml \
+#                  -f docker-compose-AWS.sim.gpu.yml up
+#   WORLD=house ... up          # (env vars work the same)
+#   HEADLESS=False ... up       # GUI, after `xhost +local:docker`
+#
+# Requires: NVIDIA driver on host, `nvidia-container-toolkit`, and the `nvidia`
+# Docker runtime / CDI (both present on this laptop).
+services:
+  sim:
+    # Use the NVIDIA container runtime.
+    runtime: nvidia
+    environment:
+      # Stop forcing llvmpipe — render on the GPU instead.
+      - LIBGL_ALWAYS_SOFTWARE=0
+      # Expose the GPU and the capabilities gz/ogre2 needs (graphics+display for
+      # rendering, not just compute).
+      - NVIDIA_VISIBLE_DEVICES=all
+      - NVIDIA_DRIVER_CAPABILITIES=all
+      - __GLX_VENDOR_LIBRARY_NAME=nvidia
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu, graphics, display, compute, utility]
+    # Fallback direct DRI passthrough (harmless alongside the nvidia runtime;
+    # helps EGL find a render node).
+    devices:
+      - /dev/dri:/dev/dri

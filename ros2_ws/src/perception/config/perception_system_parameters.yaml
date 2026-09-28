@@ -1,0 +1,14 @@
+camera:
+  max_detection_range: 6.0       # meters (RealSense D435: 6–10m)
+  fov_horizontal: 87             # degrees
+  fov_vertical: 58               # degrees
+
+lidar:
+  num_rays: 360                  # angular resolution of the 360° planning scan used by the
+                                 # exploration planner to estimate coverage potential per
+                                 # candidate viewpoint. 360 = 1°/ray. Reduce to 72 for
+                                 # faster planning on large maps (5°/ray).
+  scan_topic: /panoramic/scan
+  scan_topic_1: /front_laser/laser_scan
+  scan_topic_2: /back_laser/laser_scan
+  base_frame: base_footprint

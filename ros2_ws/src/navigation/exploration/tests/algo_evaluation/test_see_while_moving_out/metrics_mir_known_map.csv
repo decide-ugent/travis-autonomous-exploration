@@ -1,0 +1,4 @@
+map,mode,arm,hit_plan_cap,total_plan_time_s,mean_plan_time_ms,mark_time_s,est_exploration_time_s,final_coverage,reached_threshold,coverage_holes_frac,total_angular_travel_deg,total_spins,zero_gain_spins,path_length_m,coverage_per_m,coverage_auc,path_to_50pct_m,path_to_90pct_m,n_plans,n_waypoints,redundant_coverage_frac,n_direction_reversals,total_turning_angle_deg,path_efficiency_vs_nn,robot
+lab_ghent,known_map,turn_at_goal,False,4.988,623.46,0.119,1471.0,0.7885,False,0.2115,29955.0,151,6,150.5,0.00524,0.5677,45.55,,8,26,0.9442,3,1522.8,1.248,mir
+lab_ghent,known_map,see_while_moving,False,6.149,683.2,0.221,1049.3,0.7932,False,0.2068,20925.0,0,0,151.93,0.00522,0.4923,66.8,,9,26,0.9613,3,1537.9,1.219,mir
+lab_ghent,known_map,see_while_moving_oriented,False,4.383,626.15,0.224,954.7,0.8129,False,0.1871,20417.8,0,0,130.25,0.00624,0.5415,44.15,,7,23,0.957,2,1205.2,1.268,mir

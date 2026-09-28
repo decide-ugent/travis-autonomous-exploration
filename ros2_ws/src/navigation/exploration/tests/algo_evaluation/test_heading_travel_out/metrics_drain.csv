@@ -1,0 +1,2 @@
+map,variant,total_angular_travel_deg,total_spins,zero_gain_spins,near_redundant_spins,final_coverage,waypoints_visited,est_rotation_time_s,cells_per_deg
+lab_ghent,production_today,9030.0,175,4,110,0.8811,27,463.2,10.87

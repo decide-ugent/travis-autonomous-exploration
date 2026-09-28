@@ -1,0 +1,32 @@
+services:
+
+  # --- Local development ---
+  # Before starting: run `xhost +local:docker` on the host to allow X11 access
+  jazzy:
+    build: .
+    tty: true
+    container_name: TRAVIS_ros2jazzy
+    network_mode: host   # Required for ROS 2 DDS discovery
+    ipc: host            # Required for FastDDS shared memory transport
+    environment:
+      - DISPLAY=${DISPLAY}
+      - XAUTHORITY=/home/ubuntu/.Xauthority
+      - LIBGL_ALWAYS_SOFTWARE=1
+      - MESA_GL_VERSION_OVERRIDE=3.3
+      - ROS_DOMAIN_ID=0
+      - FASTRTPS_DEFAULT_PROFILES_FILE=/fastdds_profile.xml
+    volumes:
+      - ./ros2_ws/src:/ros2_ws/src
+      - ./assets:/ros2_ws/src/assets
+      - ./fastdds_profile.xml:/fastdds_profile.xml
+      - ${HOME}/.Xauthority:/home/ubuntu/.Xauthority:rw
+      - /tmp/.X11-unix:/tmp/.X11-unix:rw
+    user: "${UID}:${GID}"
+    env_file:
+      - .env
+    command: >
+      bash -c "find /ros2_ws/src -name '*.py' -path '*/ros2_*' -exec chmod +x {} + &&
+               source /opt/ros/jazzy/setup.bash &&
+               colcon build --symlink-install &&
+               source /ros2_ws/install/setup.bash &&
+               tail -f /dev/null"

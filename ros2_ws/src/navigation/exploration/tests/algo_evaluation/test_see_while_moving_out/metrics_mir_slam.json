@@ -1,0 +1,32 @@
+[
+  {
+    "map": "house_amazon",
+    "mode": "slam",
+    "arm": "see_while_moving",
+    "hit_plan_cap": false,
+    "total_plan_time_s": 1.22,
+    "mean_plan_time_ms": 243.98,
+    "mark_time_s": 0.101,
+    "est_exploration_time_s": 458.0,
+    "final_coverage": 0.953,
+    "reached_threshold": true,
+    "coverage_holes_frac": 0.047,
+    "total_angular_travel_deg": 6705.0,
+    "total_spins": 0,
+    "zero_gain_spins": 0,
+    "path_length_m": 80.33,
+    "coverage_per_m": 0.01186,
+    "coverage_auc": 0.7968,
+    "path_to_50pct_m": 8.86,
+    "path_to_90pct_m": 45.08,
+    "n_plans": 5,
+    "n_waypoints": 17,
+    "redundant_coverage_frac": 0.9702,
+    "n_direction_reversals": 6,
+    "total_turning_angle_deg": 1340.7,
+    "path_efficiency_vs_nn": 1.335,
+    "robot": "mir",
+    "min_frontier_cells": 0,
+    "no_progress_streak": 0
+  }
+]

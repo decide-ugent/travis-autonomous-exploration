@@ -1,0 +1,13 @@
+map,variant,total_angular_travel_deg,total_spins,zero_gain_spins,near_redundant_spins,final_coverage,waypoints_visited,est_rotation_time_s,cells_per_deg
+lab_ghent,production_today,10710.0,191,5,125,0.8837,33,524.5,9.2
+lab_ghent,cluster_tiebreak,10560.0,191,5,127,0.8837,33,521.2,9.33
+lab_ghent,optimal_sweep_order,9360.0,191,6,126,0.8837,33,494.5,10.52
+lab_ghent,cluster_and_optimal_order,9120.0,191,5,127,0.8837,33,489.2,10.8
+lab_05,production_today,5895.0,108,4,61,0.9858,18,293.0,10.13
+lab_05,cluster_tiebreak,5925.0,108,5,61,0.9858,18,293.7,10.08
+lab_05,optimal_sweep_order,5505.0,108,4,58,0.9858,18,284.3,10.85
+lab_05,cluster_and_optimal_order,5355.0,108,3,59,0.9858,18,281.0,11.16
+warehouse_amazon,production_today,6765.0,137,2,83,0.9956,21,355.8,13.15
+warehouse_amazon,cluster_tiebreak,6795.0,136,2,80,0.9956,21,355.0,13.09
+warehouse_amazon,optimal_sweep_order,6465.0,137,3,81,0.9956,21,349.2,13.76
+warehouse_amazon,cluster_and_optimal_order,6285.0,136,3,80,0.9956,21,343.7,14.16
