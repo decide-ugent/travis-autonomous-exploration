@@ -1,6 +1,52 @@
 # Travis exploration
 
-This branch contains the autonomous exploration stack for Mir250. It combines Nav2 navigation with a custom frontier-based exploration node to autonomously map or navigate an environment. The goal is to viusally observe most of the environment in the most optimal manner wether we have a map of the environment or not. 
+Autonomous visual exploration for indoor mobile robots on ROS 2 Jazzy and Nav2: the robot decides on its own where to drive and where to point its camera so that it sees as much of the floor as possible, with or without a map.
+
+![Real MiR250 exploring the Ghent warehouse with a known map](docs/exploration_system_results_and_explanation/media/timelapse_ghent_warehouse_known_map.gif)
+
+## What this repo is about
+
+Manually inspecting a space is slow, repetitive and easy to get wrong: corners get missed, aisles get skipped. This stack hands that "go look around" job to the robot, as the first step before any task that needs to understand what is in the environment.
+
+It is **coverage planning, not classic frontier exploration**. The planner reasons about which floor cells the camera has actually seen, not just where the map boundary is:
+
+1. Lay candidate viewpoints over every spot the robot's body fits.
+2. Pick the smallest set of viewpoints that together see (almost) the whole floor, using a greedy set cover weighted by wall-aware travel distance.
+3. Visit them in a short order, recording camera coverage continuously while driving and arriving already facing the most unseen direction.
+
+![Final exploration plan on a map](docs/exploration_system_results_and_explanation/images/step_6_final_plan.png)
+
+It works in two modes: **known-map** (a floor plan is given, maximise camera coverage) and **SLAM** (the map is built live, frontiers drive the replanning). It is built for real robots: a human can take over at any time without ending the run, Nav2 failures are checked against the real robot pose, and a restarted Nav2 is reconnected automatically.
+
+**Results.** Each autonomous run is compared to a human driving the same robot through the same environment (setting Nav2 goals by hand). "Floor seen" is how much the robot observed, as a share of what the human observed: 100% means it saw as much as the human. "Distance driven" is the mean path length of the robot against the human's. Full details in the [results report](docs/exploration_system_results_and_explanation/Report_exploration.md).
+
+| Environment | Map mode | Runs | Floor seen, relative to human | Distance driven, robot vs human |
+|---|---|---|---|---|
+| House, 157 m², simulated | SLAM | 6 | 97% | 55.9 m vs 50.3 m (11% more) |
+| House, 157 m², simulated | known map | 4 | 97% | 43.3 m vs 46.2 m (6% less) |
+| Ghent warehouse, ~220 m², **real robot** | SLAM | 3 | 94.5% | 164.4 m vs 127.2 m (29% more) |
+| Ghent warehouse, ~220 m², **real robot** | known map | 3 | 96.3% | 108.8 m vs 91.7 m (19% more) |
+| Hospital, ~1170 m², simulated | known map | 4 | 87% | 424.5 m vs 426.4 m (same) |
+| Hospital, ~1170 m², simulated | SLAM | 1 | 92% | 845.9 m vs 426.4 m (98% more) |
+
+The robot front-loads the work: in the house it reaches half its final coverage in 54% of the human's distance, covers the whole house in under 7 minutes, and needed no human help across 10 house runs. Its known weak spots are large buildings (the hospital plateaus at 70 to 80% coverage, and SLAM there crosses the building back and forth) and the endgame, where much of the driving goes into the last few percent. See [Current limitations](docs/exploration_system_results_and_explanation/Report_exploration.md#current-limitations).
+
+**This repo is for you if** you need a robot to autonomously observe an indoor space with a camera, want a Nav2-based exploration you can run in simulation and on a real MiR250, or want a tested, measured baseline to compare your own exploration strategy against.
+
+Further reading: [V2.0 conceptual overview](docs/exploration_V2.0_overview.md), [results report](docs/exploration_system_results_and_explanation/Report_exploration.md), [exploration package README](ros2_ws/src/navigation/exploration/README.md).
+
+## Table of contents
+
+- [What this repo is about](#what-this-repo-is-about)
+- [Packages overview](#packages-overview)
+- [Build](#build)
+- [Launch files](#launch-files)
+- [Saving a map (SLAM mode)](#saving-a-map-slam-mode)
+- [How exploration works](#how-exploration-works)
+  - [Safety nets for the real robot](#safety-nets-for-the-real-robot)
+- [Testing](#testing)
+- [Global planner configuration](#global-planner-configuration)
+- [Speed tuning](#speed-tuning)
 
 ---
 
